@@ -1,0 +1,21 @@
+{
+  "name": "doubles-scoresheet",
+  "version": "1.0.0",
+  "description": "バドミントンのダブルスの練習試合で、主審が点を取ったペアを押すだけで、紙と同じ形のスコアシートが埋まっていくWebアプリ。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Haruu315/doubles-scoresheet.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Haruu315/doubles-scoresheet/issues"
+  },
+  "homepage": "https://github.com/Haruu315/doubles-scoresheet#readme"
+}
