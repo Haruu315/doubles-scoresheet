@@ -32,12 +32,31 @@ const server = http.createServer((req, res) => {
       res.writeHead(303, { Location: `/matches/${id}` });
       res.end();
     });
+  } else if (req.method === 'POST' && req.url.startsWith('/matches/') && req.url.endsWith('/points')) {
+    const id = Number(req.url.split('/')[2]);
+    const match = matches[id];
+    let body = '';
+    req.on('data', (chunk) => {
+      body += chunk;
+    });
+    req.on('end', () => {
+      const team = new URLSearchParams(body).get('team');
+      if (match && (team === 'A' || team === 'B')) {
+        match.points.push(team);
+        console.info(`得点: id=${id} ${team}  ${match.points.join('')}`);
+        res.writeHead(303, { Location: `/matches/${id}` });
+        res.end();
+      } else {
+        notFound(res);
+      }
+    });
   } else if (req.method === 'GET' && req.url.startsWith('/matches/')) {
     const id = Number(req.url.split('/')[2]);
     const match = matches[id];
     if (match) {
       res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
       res.end(pug.renderFile('./views/match.pug', {
+        id: id,
         teamA: match.teamA,
         teamB: match.teamB,
         scoreA: match.points.filter((p) => p === 'A').length,
