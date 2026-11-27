@@ -1,0 +1,13 @@
+doctype html
+html(lang="ja")
+  head
+    meta(charset="utf-8")
+    title ダブルス スコアシート
+  body
+    h1 ダブルス スコアシート
+    form(method="post" action="/matches")
+      label Aペアの名前
+        input(type="text" name="teamA" required)
+      label Bペアの名前
+        input(type="text" name="teamB" required)
+      button(type="submit") 試合を始める
