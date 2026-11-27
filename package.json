@@ -1,7 +1,7 @@
 {
   "name": "doubles-scoresheet",
   "version": "1.0.0",
-  "description": "バドミントンのダブルスの練習試合で、主審が点を取ったペアを押すだけで、紙と同じ形のスコアシートが埋まっていくWebアプリ。",
+  "description": "バドミントンのダブルスの練習試合で、得点したペアのボタンを押すだけで点数を数えられるWebアプリ。",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
