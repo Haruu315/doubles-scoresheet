@@ -4,6 +4,8 @@
   "description": "バドミントンのダブルスの練習試合で、主審が点を取ったペアを押すだけで、紙と同じ形のスコアシートが埋まっていくWebアプリ。",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
