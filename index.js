@@ -3,6 +3,18 @@ const pug = require('pug');
 
 const matches = [];
 
+function getScore(match) {
+  const scoreA = match.points.filter((p) => p === 'A').length;
+  const scoreB = match.points.filter((p) => p === 'B').length;
+  let winner = null;
+  if (scoreA >= 21) {
+    winner = match.teamA;
+  } else if (scoreB >= 21) {
+    winner = match.teamB;
+  }
+  return { scoreA, scoreB, winner };
+}
+
 function notFound(res) {
   res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
   res.end('<h1>ページが見つかりません</h1>');
@@ -42,8 +54,10 @@ const server = http.createServer((req, res) => {
     req.on('end', () => {
       const team = new URLSearchParams(body).get('team');
       if (match && (team === 'A' || team === 'B')) {
-        match.points.push(team);
-        console.info(`得点: id=${id} ${team}  ${match.points.join('')}`);
+        if (getScore(match).winner === null) {
+          match.points.push(team);
+          console.info(`得点: id=${id} ${team}  ${match.points.join('')}`);
+        }
         res.writeHead(303, { Location: `/matches/${id}` });
         res.end();
       } else {
@@ -65,13 +79,15 @@ const server = http.createServer((req, res) => {
     const id = Number(req.url.split('/')[2]);
     const match = matches[id];
     if (match) {
+      const { scoreA, scoreB, winner } = getScore(match);
       res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
       res.end(pug.renderFile('./views/match.pug', {
         id: id,
         teamA: match.teamA,
         teamB: match.teamB,
-        scoreA: match.points.filter((p) => p === 'A').length,
-        scoreB: match.points.filter((p) => p === 'B').length,
+        scoreA: scoreA,
+        scoreB: scoreB,
+        winner: winner,
       }));
     } else {
       notFound(res);
