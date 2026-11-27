@@ -9,3 +9,5 @@ html(lang="ja")
     form(method="post" action=`/matches/${id}/points`)
       button(type="submit" name="team" value="A") #{teamA} ＋1
       button(type="submit" name="team" value="B") #{teamB} ＋1
+    form(method="post" action=`/matches/${id}/undo`)
+      button(type="submit") 1点戻す

@@ -50,6 +50,17 @@ const server = http.createServer((req, res) => {
         notFound(res);
       }
     });
+  } else if (req.method === 'POST' && req.url.startsWith('/matches/') && req.url.endsWith('/undo')) {
+    const id = Number(req.url.split('/')[2]);
+    const match = matches[id];
+    if (match) {
+      const removed = match.points.pop();
+      console.info(`1点戻す: id=${id} ${removed}  ${match.points.join('')}`);
+      res.writeHead(303, { Location: `/matches/${id}` });
+      res.end();
+    } else {
+      notFound(res);
+    }
   } else if (req.method === 'GET' && req.url.startsWith('/matches/')) {
     const id = Number(req.url.split('/')[2]);
     const match = matches[id];
